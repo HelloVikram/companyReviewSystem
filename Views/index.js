@@ -37,18 +37,27 @@ searchform.addEventListener('submit', (event) => {
     async function getData() {
         try {
             const response = await axios.get(`http://localhost:3000/user/search/${name}`);
+
             showData(response.data);
         } catch (err) {
             console.log(err);
         }
     }
     getData();
+    event.target.search.value="";
 })
 
 
 function showData(obj){
    const ul=document.querySelector('ul');
    ul.innerHTML="";
+
+   if (!obj || !obj.searchedcompany) {
+    const noDataMessage = document.createElement('p');
+    noDataMessage.textContent = "No company available.";
+    ul.appendChild(noDataMessage);
+    return
+}
    
    const cname=document.createElement('h3');
    cname.textContent=`Company Name:${obj.searchedcompany}`;

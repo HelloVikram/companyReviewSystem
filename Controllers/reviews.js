@@ -18,6 +18,12 @@ const getData=async(req,res,next)=>{
     const name=req.params.name;
     try{
        const reviews= await db.findAll({where:{Companyname:name}});
+
+       if (reviews.length==0) {
+        return res.json({searchedcompany:null
+        });
+    }
+
        let sum=0;
        for(let review of reviews){
         sum+=review.Ratingvalue;
